@@ -18,6 +18,18 @@ async function query(sql, params) {
   });
 }
 
+async function getAllPersonDetails(req, res, next) {
+  await connection.query("SELECT * FROM person", function (err, data, fields) {
+    if (err) return next(new AppError(err));
+    res.status(200).json({
+      status: "success",
+      length: data?.length,
+      data: data,
+    });
+  });
+}
+
 module.exports = {
   query,
+  getAllPersonDetails,
 };
